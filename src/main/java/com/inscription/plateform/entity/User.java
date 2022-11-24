@@ -8,6 +8,7 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Setter
@@ -27,6 +28,18 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
+
+
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
 
 
 
