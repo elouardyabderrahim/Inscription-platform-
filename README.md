@@ -4,6 +4,10 @@
 * Version        : 0.1
 * Project Status : BackEnd and create API
 ----------------------------------------------------------
+We are working with :
+* JDK 17
+* SQLServer 17
+----------------------------------------------------------
 ⏳ Progress { █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ } 00.00 %
 * Conception  : 00 %
 * DataBase    : 00 %
