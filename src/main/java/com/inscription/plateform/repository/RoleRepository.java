@@ -1,14 +1,13 @@
 package com.inscription.plateform.repository;
 
-import com.inscription.plateform.entity.Form;
+
+import com.inscription.plateform.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-
-public interface FormRepository extends JpaRepository<Form,Long> {
-
+public interface RoleRepository extends JpaRepository<Role,Long> {
 
 
-
+    Role findByName(String user);
 }
