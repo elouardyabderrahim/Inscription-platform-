@@ -21,4 +21,5 @@ Spring Boot application with SQLServer Database.
 * Back-End  : Spring Framework
 ## App designs
 ### Class
+![Class Diagram](https://user-images.githubusercontent.com/85711688/203938169-295cb04c-0f21-44ac-ab8a-34b1aad3f2be.png)
 ### Use case
