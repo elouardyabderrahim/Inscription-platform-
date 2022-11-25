@@ -41,6 +41,8 @@ public class User {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "form_id", referencedColumnName = "id")
+    private Form form;
 
 }

@@ -29,4 +29,9 @@ public class Form {
     private String file;
     private Genre genre;
 
+    @OneToOne(mappedBy = "form")
+    private User user;
+
+
+
 }
