@@ -19,7 +19,9 @@ public class UserService  implements AppService <User>{
     @Autowired
     private RoleRepository roleRepository;
 
+
 //    @Autowired
+
     //private PasswordEncoder passwordEncoder;
 
 
