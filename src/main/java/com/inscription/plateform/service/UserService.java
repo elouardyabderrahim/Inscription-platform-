@@ -24,10 +24,10 @@ public class UserService  implements AppService <User>{
 
 
     @Override
-    public void save(User Employee) {
-        String password = Employee.getPassword();
+    public void save(User user) {
+        String password = user.getPassword();
        // Employee.setPassword(passwordEncoder.encode(password));
-        userRepository.save(Employee);
+        userRepository.save(user);
     }
 
     @Override
@@ -50,14 +50,14 @@ public class UserService  implements AppService <User>{
         return (List<User>) userRepository.findAll();
     }
 
-    public User loadUserByUserName(String username) {
-        return userRepository.findByUsername(username);
+    public User loadUserByUserName(String userName) {
+        return userRepository.findByUsername(userName);
     }
 
     public User registerDefaultUser(User userArg) {
 
-        String username = userArg.getUserName();
-        User user = userRepository.findByUsername(username);
+        String userName = userArg.getUserName();
+        User user = userRepository.findByUsername(userName);
         if (user == null) {
 
             String password = user.getPassword();

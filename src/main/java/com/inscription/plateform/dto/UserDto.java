@@ -2,6 +2,8 @@ package com.inscription.plateform.dto;
 
 import com.inscription.plateform.entity.Role;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import java.util.Collection;
