@@ -26,15 +26,15 @@ public class FormService {
 
     public Form updateForm(long id, Form formRequest){
         Form form = formRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Form", "id", id));
-        form.setCnie(formRequest.getCnie());
-        form.setActif(formRequest.isActif());
-        form.setFile(formRequest.getFile());
-        form.setGenre(formRequest.getGenre());
-        form.setAdresse(formRequest.getAdresse());
-        form.setDateNaissance(formRequest.getDateNaissance());
-        form.setImage(formRequest.getImage());
-        form.setNumTelephone(formRequest.getNumTelephone());
-        form.setUser(formRequest.getUser());
+        if(formRequest.getCnie() != null) form.setCnie(formRequest.getCnie());
+        if(!formRequest.isActif()) form.setActif(formRequest.isActif());
+        if(formRequest.getFile() != null) form.setFile(formRequest.getFile());
+        if(formRequest.getGenre() != null) form.setGenre(formRequest.getGenre());
+        if(formRequest.getAdresse() != null) form.setAdresse(formRequest.getAdresse());
+        if(formRequest.getDateNaissance() != null) form.setDateNaissance(formRequest.getDateNaissance());
+        if(formRequest.getImage() != null) form.setImage(formRequest.getImage());
+        if(formRequest.getNumTelephone() != null) form.setNumTelephone(formRequest.getNumTelephone());
+        if(formRequest.getUser() != null) form.setUser(formRequest.getUser());
         return formRepository.save(form);
     }
 
