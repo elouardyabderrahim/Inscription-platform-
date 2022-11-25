@@ -16,7 +16,7 @@ public class UserService  implements AppService <User>{
     @Autowired
     private UserRepository userRepository;
 
-    //@Autowired
+    @Autowired
     private RoleRepository roleRepository;
 
 
@@ -56,20 +56,12 @@ public class UserService  implements AppService <User>{
         return userRepository.findByUserName(userName);
     }
 
-    public User registerDefaultUser(User userArg) {
 
-        String userName = userArg.getUserName();
-        User user = userRepository.findByUserName(userName);
-        if (user == null) {
+    public User registerDefaultUser(User user) {
+      //  String password = user.getPassword();
+       // user.setPassword(passwordEncoder.encode(password));
 
-//            String password = user.getPassword();
-           // user.setPassword(passwordEncoder.encode(password));
-
-            //user.setRoles(Arrays.asList(roleRepository.findByName("USER")));
-
-        } else {
-
-            throw new RuntimeException("Username invalid");
-        }return userRepository.save(user);
+        user.setRoles(Arrays.asList(roleRepository.findByName("USER")));
+        return userRepository.save(user);
     }
 }
