@@ -17,9 +17,9 @@ import java.util.Map;
 @RequestMapping("/api/user")
 public class UserConroller {
 
-    @Autowired
-    private UserService service;
 
+    private UserService service;
+    @Autowired
     public UserConroller(UserService service) {
         this.service = service;
     }
@@ -29,7 +29,7 @@ public class UserConroller {
         return ("<h1>Welcom to Inscription Platform<h1>");
     }
 
-    @PostMapping
+    @PostMapping("/singup")
 
     public String register(@RequestBody User user) {
         System.out.println(user);

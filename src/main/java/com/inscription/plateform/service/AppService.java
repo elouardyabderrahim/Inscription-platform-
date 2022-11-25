@@ -1,7 +1,9 @@
 package com.inscription.plateform.service;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+@Service
 public interface AppService <T>{
 
     public void save(T obj);
