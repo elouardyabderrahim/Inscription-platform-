@@ -25,7 +25,17 @@ public class FormService {
     }
 
     public Form updateForm(long id, Form formRequest){
-        return null;
+        Form form = formRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Form", "id", id));
+        form.setCnie(formRequest.getCnie());
+        form.setActif(formRequest.isActif());
+        form.setFile(formRequest.getFile());
+        form.setGenre(formRequest.getGenre());
+        form.setAdresse(formRequest.getAdresse());
+        form.setDateNaissance(formRequest.getDateNaissance());
+        form.setImage(formRequest.getImage());
+        form.setNumTelephone(formRequest.getNumTelephone());
+        form.setUser(formRequest.getUser());
+        return formRepository.save(form);
     }
 
     public void deleteForm(long id){
