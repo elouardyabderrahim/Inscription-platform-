@@ -23,16 +23,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
-    private String lastname;
+    private String lastName;
     private String userName;
     @Column(unique = true)
     private String email;
     private String password;
 
 
+//    public User(String firstName, String lastname, String userName, String email, String password, Collection<Role> roles, Form form) {
+//        this.firstName = firstName;
+//        this.lastname = lastname;
+//        this.userName = userName;
+//        this.email = email;
+//        this.password = password;
+//        this.roles = roles;
+//        this.form = form;
+//    }
 
-
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
