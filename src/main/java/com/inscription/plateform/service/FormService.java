@@ -1,45 +1,45 @@
 package com.inscription.plateform.service;
 
-
 import com.inscription.plateform.entity.Form;
 import com.inscription.plateform.repository.FormRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.inscription.plateform.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
+public class FormService {
 
-public class FormService  implements AppService <Form>{
+    private final FormRepository formRepository;
 
-
-    @Autowired
-    private FormRepository formRepository;
-
-    @Override
-    public void save(Form form) {
-        formRepository.save(form);
+    public FormService(FormRepository formRepository){
+        this.formRepository = formRepository;
     }
 
-    @Override
-    public void update(Form form) {
-        formRepository.save(form);
-
+    public List<Form> getAllForm(){
+        return formRepository.findAll();
     }
 
-    @Override
-    public void delete(Long id) {
-        formRepository.deleteById(id);
-
+    public Form createForm(Form form){
+        return formRepository.save(form);
     }
 
-    @Override
-    public Form findById(Long id) {
-        return formRepository.findById(id).get();
+    public Form updateForm(long id, Form formRequest){
+        return null;
     }
 
-    @Override
-    public List<Form> getAll() {
-        return (List<Form>) formRepository.findAll();
+    public void deleteForm(long id){
+        Form form = formRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Form", "id", id));
+
+        formRepository.delete(form);
+    }
+
+    public Form getFormById(long id) {
+        Optional<Form> result = formRepository.findById(id);
+        if(result.isPresent()) {
+            return result.get();
+        }else {
+            throw new ResourceNotFoundException("Form", "id", id);
+        }
     }
 }
