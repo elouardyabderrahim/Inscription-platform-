@@ -29,7 +29,7 @@ public class UserConroller {
         return ("<h1>Welcom to Inscription Platform<h1>");
     }
 
-    @PostMapping
+    @PostMapping("/signup")
 
     public String register(@RequestBody User user) {
         System.out.println(user);
@@ -43,7 +43,7 @@ public class UserConroller {
 
         User newUser = service.findById(id);
         newUser.setFirstName(user.getFirstName());
-        newUser.setLastname(user.getLastname());
+        newUser.setLastName(user.getLastName());
         newUser.setUserName(user.getUserName());
         newUser.setEmail(user.getEmail());
         newUser.setPassword(user.getPassword());

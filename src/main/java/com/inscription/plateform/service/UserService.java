@@ -19,7 +19,7 @@ public class UserService  implements AppService <User>{
     @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
+//    @Autowired
     //private PasswordEncoder passwordEncoder;
 
 
@@ -51,16 +51,16 @@ public class UserService  implements AppService <User>{
     }
 
     public User loadUserByUserName(String userName) {
-        return userRepository.findByUsername(userName);
+        return userRepository.findByUserName(userName);
     }
 
     public User registerDefaultUser(User userArg) {
 
         String userName = userArg.getUserName();
-        User user = userRepository.findByUsername(userName);
+        User user = userRepository.findByUserName(userName);
         if (user == null) {
 
-            String password = user.getPassword();
+//            String password = user.getPassword();
            // user.setPassword(passwordEncoder.encode(password));
 
             user.setRoles(Arrays.asList(roleRepository.findByName("USER")));
