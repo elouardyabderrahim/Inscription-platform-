@@ -1,6 +1,7 @@
 package com.inscription.plateform.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,10 +49,14 @@ public class User {
                     name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
+
+    @JsonIgnore
     private Collection<Role> roles = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "form_id", referencedColumnName = "id")
+
+    @JsonIgnore
     private Form form;
 
 }
