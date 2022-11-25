@@ -20,10 +20,7 @@ public class Form {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
     private String adresse;
-    private String email;
     private String cnie;
     private String numTelephone;
     private Date dateNaissance;
@@ -31,7 +28,10 @@ public class Form {
     private String image;
     private String file;
     private Genre genre;
+
     @OneToOne(mappedBy = "form")
     private User user;
+
+
 
 }
