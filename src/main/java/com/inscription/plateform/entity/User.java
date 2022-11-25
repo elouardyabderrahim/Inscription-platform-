@@ -42,7 +42,7 @@ public class User {
 //        this.form = form;
 //    }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
@@ -53,10 +53,10 @@ public class User {
     @JsonIgnore
     private Collection<Role> roles = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "form_id", referencedColumnName = "id")
 
-    @JsonIgnore
+   @JsonIgnore
     private Form form;
 
 }
