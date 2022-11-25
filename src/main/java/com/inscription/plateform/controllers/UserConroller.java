@@ -32,10 +32,16 @@ public class UserConroller {
 
     @PostMapping("/singup")
 
-
     public String register(@RequestBody User user) {
         System.out.println(user);
         service.registerDefaultUser(user);
+        try {
+
+        }catch ( Exception e) {
+
+            System.out.println("Nice Work");
+        };
+
         return "register success";
     }
 
