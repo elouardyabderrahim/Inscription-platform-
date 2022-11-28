@@ -8,11 +8,11 @@ We are working with :
 * JDK 17
 * SQLServer 17
 ----------------------------------------------------------
-⏳ Progress { █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ } 00.00 %
-* Conception  : 00 %
-* DataBase    : 00 %
-* Back-End    : 00 %
-* Testing     : 00 %
+⏳ Progress { ██████████████▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ } 45.00 %
+* Conception  : 55 %
+* DataBase    : 80 %
+* Back-End    : 30 %
+* Testing     : 15 %
 ----------------------------------------------------------
 # Project Inscription platform
 Spring Boot application with SQLServer Database.
