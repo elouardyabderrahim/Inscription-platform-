@@ -41,6 +41,7 @@ public class RoleService {
         if (role == null)
             throw new RuntimeException("Role not found");
         user.getRoles().remove(role);
+        userRepository.save(user);
 
     }
 
