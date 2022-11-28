@@ -1,5 +1,7 @@
 package com.inscription.plateform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,8 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="roles")
+
+@JsonIdentityInfo(scope = Role.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Role {
 
 

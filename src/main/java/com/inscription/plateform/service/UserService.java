@@ -61,7 +61,12 @@ public class UserService  implements AppService <User>{
       //  String password = user.getPassword();
        // user.setPassword(passwordEncoder.encode(password));
 
-        user.setRoles(Arrays.asList(roleRepository.findByName("USER")));
+        try {
+            user.setRoles(Arrays.asList(roleRepository.findByName("USER")));
+
+        }catch (Exception e){
+            System.out.println("User Not found");
+        }
         return userRepository.save(user);
     }
 }
