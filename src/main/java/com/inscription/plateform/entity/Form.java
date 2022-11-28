@@ -33,11 +33,13 @@ public class Form {
     private String image;
     private String file;
 
-
     private Genre genre;
 
     @OneToOne(mappedBy = "form")
     private User user;
+
+
+
 
 
 

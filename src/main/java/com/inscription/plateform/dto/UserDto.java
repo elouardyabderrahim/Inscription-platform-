@@ -1,5 +1,6 @@
 package com.inscription.plateform.dto;
 
+import com.inscription.plateform.entity.Form;
 import com.inscription.plateform.entity.Role;
 import lombok.Data;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class UserDto {
     private String email;
     private String password;
 
+    private FormeDto form;
     private Collection<Role> roles;
 
 }

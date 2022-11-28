@@ -21,7 +21,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Table(name="users")
 
-@JsonIdentityInfo(scope = User.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(scope = User.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
 
@@ -54,13 +54,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
 
-
     private Collection<Role> roles = new ArrayList<>();
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "form_id", referencedColumnName = "id")
-
-
     private Form form;
 
 }

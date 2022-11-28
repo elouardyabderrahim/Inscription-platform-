@@ -2,11 +2,15 @@ package com.inscription.plateform.controllers;
 
 import com.inscription.plateform.dto.FormeDto;
 import com.inscription.plateform.entity.Form;
+import com.inscription.plateform.response.ResponseMessage;
+import com.inscription.plateform.service.FileService;
 import com.inscription.plateform.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +24,13 @@ public class FormController {
 
     private FormService formService;
 
-    public FormController(FormService formService){
+
+    @Autowired
+    private FileService fileService;
+
+    public FormController(FormService formService, FileService fileService) {
         this.formService = formService;
+        this.fileService = fileService;
     }
 
     @GetMapping
@@ -62,6 +71,25 @@ public class FormController {
 
         return ResponseEntity.ok().body(formResponse);
     }
+
+
+
+//Upload File to form
+    @PostMapping("/upload")
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+        String message = "";
+        try {
+            fileService.Upload(file);
+
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+    }
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteForm(@PathVariable(name = "id") Long id){

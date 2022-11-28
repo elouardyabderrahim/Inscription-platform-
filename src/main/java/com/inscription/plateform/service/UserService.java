@@ -28,6 +28,7 @@ public class UserService{
     }
 
     public User createUser(User user){
+        user.setRoles(Arrays.asList(roleRepository.findByName("USER")));
         return userRepository.save(user);
     }
 
