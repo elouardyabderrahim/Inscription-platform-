@@ -2,6 +2,8 @@ package com.inscription.plateform.controllers;
 
 import com.inscription.plateform.dto.FormeDto;
 import com.inscription.plateform.entity.Form;
+import com.inscription.plateform.entity.FormFile;
+import com.inscription.plateform.response.ResponseFile;
 import com.inscription.plateform.response.ResponseMessage;
 import com.inscription.plateform.service.FileService;
 import com.inscription.plateform.service.FormService;
@@ -10,6 +12,7 @@ import org.springframework.http.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import java.util.List;
@@ -76,7 +79,22 @@ public class FormController {
 
 
 
-//Upload File to form
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteForm(@PathVariable(name = "id") Long id){
+        formService.deleteForm(id);
+        return new ResponseEntity<String>("Form deleted successfully", HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+
+    //Upload File to form
     @PostMapping("/upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
@@ -93,10 +111,28 @@ public class FormController {
 
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteForm(@PathVariable(name = "id") Long id){
-        formService.deleteForm(id);
-        return new ResponseEntity<String>("Form deleted successfully", HttpStatus.OK);
+    @GetMapping("/files")
+    public ResponseEntity<List<ResponseFile>> getListFiles() {
+        List<ResponseFile> files = fileService.getAllFiles().map(file -> {
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/files/").path(file.getId()).toUriString();
+
+            return new ResponseFile(
+                    file.getName(),
+                    fileDownloadUri,
+                    file.getType());
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(files);
+    }
+
+    @GetMapping("/files/{id}")
+    public ResponseEntity<String> getFile(@PathVariable String id) {
+        FormFile file = fileService.getFile(id);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
+                .body(file.getType());
     }
 
 }
