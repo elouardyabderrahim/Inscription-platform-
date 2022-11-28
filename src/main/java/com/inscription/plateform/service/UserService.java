@@ -1,17 +1,16 @@
 package com.inscription.plateform.service;
 
 import com.inscription.plateform.entity.User;
-import com.inscription.plateform.repository.RoleRepository;
-import com.inscription.plateform.repository.UserRepository;
+import com.inscription.plateform.exception.ResourceNotFoundException;
+import com.inscription.plateform.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 @Service
-public class UserService  implements AppService <User>{
+public class UserService{
 
     @Autowired
     private UserRepository userRepository;
@@ -19,44 +18,49 @@ public class UserService  implements AppService <User>{
     @Autowired
     private RoleRepository roleRepository;
 
-
-//    @Autowired
-
-    //private PasswordEncoder passwordEncoder;
-
-
-    @Override
-    public void save(User user) {
-        String password = user.getPassword();
-       // Employee.setPassword(passwordEncoder.encode(password));
-        userRepository.save(user);
+    public UserService(UserRepository userRepository, RoleRepository roleRepository){
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
-    @Override
-    public void update(User user) {
-        userRepository.save(user);
+    public List<User> getAllUser(){
+        return userRepository.findAll();
     }
 
-    @Override
-    public void delete(Long id) {
-        userRepository.deleteById(id);
+    public User createUser(User user){
+        return userRepository.save(user);
     }
 
-    @Override
-    public User findById(Long id) {
-        return userRepository.findById(id).get();
+    public User updateUser(long id, User userRequest){
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+
+        if (userRequest.getUserName() != null) user.setUserName(userRequest.getUserName());
+        if (userRequest.getRoles() != null) user.setRoles(userRequest.getRoles());
+        if (userRequest.getEmail() != null) user.setEmail(userRequest.getEmail());
+        if (userRequest.getPassword() != null) user.setPassword(userRequest.getPassword());
+        if (userRequest.getForm() != null) user.setForm(userRequest.getForm());
+        if (userRequest.getFirstName() != null) user.setFirstName(userRequest.getFirstName());
+        if (userRequest.getLastName() != null) user.setLastName(userRequest.getLastName());
+
+        return userRepository.save(user);
     }
 
-    @Override
-    public List<User> getAll() {
-        return (List<User>) userRepository.findAll();
+    public void deleteUser(long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+
+        userRepository.delete(user);
     }
 
-    public User loadUserByUserName(String userName) {
-        return userRepository.findByUserName(userName);
+    public User getUserById(long id) {
+        Optional<User> result = userRepository.findById(id);
+        if(result.isPresent()) {
+            return result.get();
+        }else {
+            throw new ResourceNotFoundException("User", "id", id);
+        }
     }
 
-
+// ------------------------------------------------------------------
     public User registerDefaultUser(User user) {
       //  String password = user.getPassword();
        // user.setPassword(passwordEncoder.encode(password));
