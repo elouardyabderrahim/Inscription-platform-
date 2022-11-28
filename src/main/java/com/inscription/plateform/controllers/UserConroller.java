@@ -1,27 +1,29 @@
 package com.inscription.plateform.controllers;
 
-
+import com.inscription.plateform.dto.FormeDto;
+import com.inscription.plateform.dto.UserDto;
+import com.inscription.plateform.entity.Form;
 import com.inscription.plateform.entity.User;
-import com.inscription.plateform.service.UserService;
+import com.inscription.plateform.service.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Column;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserConroller {
 
-
-    private UserService service;
     @Autowired
-    public UserConroller(UserService service) {
-        this.service = service;
+    private ModelMapper modelMapper;
+
+    private UserService userService;
+    @Autowired
+    public UserConroller(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -29,63 +31,64 @@ public class UserConroller {
         return ("<h1>Welcom to Inscription Platform<h1>");
     }
 
-
-    @PostMapping("/singup")
-
+    /*@PostMapping("/singup")
     public String register(@RequestBody User user) {
         System.out.println(user);
-        service.registerDefaultUser(user);
+        userService.registerDefaultUser(user);
         try {
 
         }catch ( Exception e) {
-
             System.out.println("Nice Work");
         };
-
         return "register success";
+    }*/
+
+    @PostMapping
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+
+        User userRequest = modelMapper.map(userDto, User.class);
+
+        User user = userService.createUser(userRequest);
+
+        UserDto userResponse = modelMapper.map(user, UserDto.class);
+
+        return new ResponseEntity<UserDto>(userResponse, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable long id, @RequestBody UserDto userDto){
 
-        User newUser = service.findById(id);
-        if (user.getFirstName() != null) newUser.setFirstName(user.getFirstName());
-        if (user.getLastName() != null) newUser.setLastName(user.getLastName());
-        if (user.getUserName() != null) newUser.setUserName(user.getUserName());
-        if (user.getEmail() != null) newUser.setEmail(user.getEmail());
-        if (user.getPassword() != null) newUser.setPassword(user.getPassword());
-        service.save(newUser);
+        User userRequest = modelMapper.map(userDto, User.class);
 
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
+        User user = userService.updateUser(id, userRequest);
+
+        UserDto userResponse = modelMapper.map(user, UserDto.class);
+
+        return ResponseEntity.ok().body(userResponse);
     }
 
-    // Get All Users
     @GetMapping
 //	@PostAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<List<User>> getAll() {
-        List<User> users = service.getAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
-
+    public List<UserDto> getAllUser(){
+        return userService.getAllUser().stream().map(user -> modelMapper.map(user, UserDto.class))
+                .collect(Collectors.toList());
     }
 
-    //Select User by Id
     @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable(name = "id") Long id){
+        User user = userService.getUserById(id);
 
-    public ResponseEntity<User> findById(@PathVariable("id") Long id) {
-        User user = service.findById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        UserDto userResponse = modelMapper.map(user, UserDto.class);
 
+        return ResponseEntity.ok().body(userResponse);
     }
 
     //Delete user by id
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id) {
-        User users = service.findById(id);
-        service.delete(id);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<String> deleteUser(@PathVariable(name = "id") Long id){
+        userService.deleteUser(id);
+        return new ResponseEntity<String>("User deleted successfully", HttpStatus.OK);
     }
 
 
