@@ -1,6 +1,7 @@
 package com.inscription.plateform.service;
 
 import com.inscription.plateform.entity.Form;
+import com.inscription.plateform.entity.FormFile;
 import com.inscription.plateform.repository.FormRepository;
 import com.inscription.plateform.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class FormService {
     }
 
     public Form createForm(Form form){
+
+        FormFile formFile = new FormFile();
         return formRepository.save(form);
     }
 

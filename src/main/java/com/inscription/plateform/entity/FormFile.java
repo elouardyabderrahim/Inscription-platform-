@@ -24,14 +24,15 @@ public class FormFile {
 
     private String name;
     private String type;
-    //@Lob
-    private byte[] data;
 
 
-    public FormFile(String name, String type, byte[] data) {
+
+
+    public FormFile(String name, String type) {
         this.name = name;
         this.type = type;
-        this.data = data;
     }
+
+
 
 }

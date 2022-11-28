@@ -23,7 +23,7 @@ public class FileService {
 
     public FormFile Upload(MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        FormFile formFile = new FormFile(fileName, file.getContentType(), file.getBytes());
+        FormFile formFile = new FormFile(fileName, file.getContentType());
 
         return fileRepository.save(formFile);
     }
