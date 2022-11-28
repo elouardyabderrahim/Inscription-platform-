@@ -1,5 +1,7 @@
 package com.inscription.plateform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,10 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table(name = "forms")
+
+@JsonIdentityInfo(scope = Form.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Form {
 
     @Id
@@ -27,6 +32,8 @@ public class Form {
     private boolean actif;
     private String image;
     private String file;
+
+
     private Genre genre;
 
     @OneToOne(mappedBy = "form")

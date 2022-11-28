@@ -1,6 +1,9 @@
 package com.inscription.plateform.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +20,8 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="users")
+
+@JsonIdentityInfo(scope = User.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
 
@@ -48,10 +53,14 @@ public class User {
                     name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
+
+
     private Collection<Role> roles = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "form_id", referencedColumnName = "id")
+
+
     private Form form;
 
 }
