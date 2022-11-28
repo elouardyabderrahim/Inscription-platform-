@@ -48,13 +48,12 @@ public class UserConroller {
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
 
-
         User newUser = service.findById(id);
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
-        newUser.setUserName(user.getUserName());
-        newUser.setEmail(user.getEmail());
-        newUser.setPassword(user.getPassword());
+        if (user.getFirstName() != null) newUser.setFirstName(user.getFirstName());
+        if (user.getLastName() != null) newUser.setLastName(user.getLastName());
+        if (user.getUserName() != null) newUser.setUserName(user.getUserName());
+        if (user.getEmail() != null) newUser.setEmail(user.getEmail());
+        if (user.getPassword() != null) newUser.setPassword(user.getPassword());
         service.save(newUser);
 
         return new ResponseEntity<>(newUser, HttpStatus.OK);
