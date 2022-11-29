@@ -8,10 +8,12 @@ import com.inscription.plateform.response.ResponseMessage;
 import com.inscription.plateform.service.FileService;
 import com.inscription.plateform.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
@@ -112,27 +114,27 @@ public class FormController {
 
 
     @GetMapping("/files")
-    public ResponseEntity<List<ResponseFile>> getListFiles() {
-        List<ResponseFile> files = fileService.getAllFiles().map(file -> {
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/files/").path(file.getId()).toUriString();
+    public ResponseEntity<List<FormFile>> getListFiles() {
+        List<FormFile> fileInfos = fileService.getAllFiles().map(path -> {
+            String filename = path.getName().toString();
+            String url = MvcUriComponentsBuilder
+                    .fromMethodName(FormController.class, "getFile", path.getName().toString()).build().toString();
 
-            return new ResponseFile(
-                    file.getName(),
-                    fileDownloadUri,
-                    file.getType());
+            return new FormFile(filename, url);
         }).collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(files);
+        return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
     }
 
-    @GetMapping("/files/{id}")
-    public ResponseEntity<String> getFile(@PathVariable String id) {
-        FormFile file = fileService.getFile(id);
 
+
+
+
+    @GetMapping("/files/{filename:.+}")
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+        Resource file = fileService.getFile(filename);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
-                .body(file.getType());
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
 }

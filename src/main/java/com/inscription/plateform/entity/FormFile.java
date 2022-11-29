@@ -21,9 +21,10 @@ public class FormFile {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-
     private String name;
     private String type;
+
+    private String url;
 
 
 
@@ -31,6 +32,7 @@ public class FormFile {
     public FormFile(String name, String type) {
         this.name = name;
         this.type = type;
+        this.url = url;
     }
 
 
