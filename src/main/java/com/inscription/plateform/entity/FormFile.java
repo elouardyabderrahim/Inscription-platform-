@@ -1,5 +1,6 @@
 package com.inscription.plateform.entity;
 
+import com.inscription.plateform.service.FileService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,16 +18,12 @@ import javax.persistence.*;
 
 public class FormFile {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private String type;
 
     private String url;
-
-
 
 
     public FormFile(String name, String type) {

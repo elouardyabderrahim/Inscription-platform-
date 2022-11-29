@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface FileRepository extends JpaRepository<FormFile,String> {
+public interface FileRepository extends JpaRepository<FormFile,Long> {
 
 
 

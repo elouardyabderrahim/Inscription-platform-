@@ -3,6 +3,7 @@ package com.inscription.plateform.service;
 
 import com.inscription.plateform.entity.FormFile;
 import com.inscription.plateform.repository.FileRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -29,9 +30,13 @@ public class FileService {
     }
 
     private final Path root = Paths.get("uploads");
+//changed
+
 
     public FormFile Upload(MultipartFile file) throws IOException {
+        //String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
         FormFile formFile = new FormFile(fileName, file.getContentType());
 
 

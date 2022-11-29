@@ -3,7 +3,6 @@ package com.inscription.plateform.controllers;
 import com.inscription.plateform.dto.FormeDto;
 import com.inscription.plateform.entity.Form;
 import com.inscription.plateform.entity.FormFile;
-import com.inscription.plateform.response.ResponseFile;
 import com.inscription.plateform.response.ResponseMessage;
 import com.inscription.plateform.service.FileService;
 import com.inscription.plateform.service.FormService;
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,17 +98,17 @@ public class FormController {
 
     //Upload File to form
     @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
-        try {
-            fileService.Upload(file);
+    public FormFile uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
 
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-        }
+        FormFile fileForm = new FormFile();
+        fileForm.setId(fileForm.getId());
+
+        fileService.Upload(file);
+
+        return fileForm;
+
+
+
     }
 
 
@@ -117,10 +117,14 @@ public class FormController {
     public ResponseEntity<List<FormFile>> getListFiles() {
         List<FormFile> fileInfos = fileService.getAllFiles().map(path -> {
             String filename = path.getName().toString();
+            String type = path.getType();
+            Long id = path.getId();
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FormController.class, "getFile", path.getName().toString()).build().toString();
 
-            return new FormFile(filename, url);
+            return new FormFile(id, filename, type, url);
+
+
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);

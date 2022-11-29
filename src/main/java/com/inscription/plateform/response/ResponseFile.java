@@ -1,4 +1,4 @@
-package com.inscription.plateform.response;
+/*package com.inscription.plateform.response;
 
 import lombok.*;
 
@@ -15,3 +15,4 @@ public class ResponseFile {
 
 
 }
+*/
