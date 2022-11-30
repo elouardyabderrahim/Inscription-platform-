@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -33,11 +36,23 @@ public class Form {
     private String image;
     private String file;
 
-
     private Genre genre;
 
     @OneToOne(mappedBy = "form")
     private User user;
+
+
+
+   /* @OneToMany(
+            mappedBy = "form",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<FormFile> files = new ArrayList<>();
+
+*/
+
+
 
 
 

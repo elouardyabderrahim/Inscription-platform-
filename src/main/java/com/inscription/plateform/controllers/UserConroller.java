@@ -36,7 +36,6 @@ public class UserConroller {
         System.out.println(user);
         userService.registerDefaultUser(user);
         try {
-
         }catch ( Exception e) {
             System.out.println("Nice Work");
         };

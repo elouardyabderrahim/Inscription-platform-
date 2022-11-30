@@ -28,6 +28,8 @@ public class UserService{
     }
 
     public User createUser(User user){
+
+        user.setRoles(Arrays.asList(roleRepository.findByName("USER")));
         return userRepository.save(user);
     }
 
@@ -61,11 +63,13 @@ public class UserService{
     }
     public User findByUserName(String userName) {
 
-            return userRepository.findByUserName(userName);}
-// ------------------------------------------------------------------
+
+        return userRepository.findByUserName(userName);}
+    // ------------------------------------------------------------------
+
     public User registerDefaultUser(User user) {
-      //  String password = user.getPassword();
-       // user.setPassword(passwordEncoder.encode(password));
+        //  String password = user.getPassword();
+        // user.setPassword(passwordEncoder.encode(password));
 
         try {
             user.setRoles(Arrays.asList(roleRepository.findByName("USER")));
