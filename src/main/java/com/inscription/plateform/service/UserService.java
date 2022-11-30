@@ -59,7 +59,9 @@ public class UserService{
             throw new ResourceNotFoundException("User", "id", id);
         }
     }
+    public User findByUserName(String userName) {
 
+            return userRepository.findByUserName(userName);}
 // ------------------------------------------------------------------
     public User registerDefaultUser(User user) {
       //  String password = user.getPassword();
