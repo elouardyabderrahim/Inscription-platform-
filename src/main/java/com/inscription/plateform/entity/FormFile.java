@@ -1,5 +1,6 @@
 package com.inscription.plateform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inscription.plateform.service.FileService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,14 +24,21 @@ public class FormFile {
     private String name;
     private String type;
 
-    private String url;
+
 
 
     public FormFile(String name, String type) {
         this.name = name;
         this.type = type;
-        this.url = url;
+
     }
+
+   // @ManyToOne(fetch = FetchType.LAZY)
+    //@JsonIgnore
+   // private Form form;
+
+
+
 
 
 

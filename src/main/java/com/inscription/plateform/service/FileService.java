@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @Service
@@ -34,11 +35,10 @@ public class FileService {
 
 
     public FormFile Upload(MultipartFile file) throws IOException {
-        //String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         FormFile formFile = new FormFile(fileName, file.getContentType());
-
 
         LinkOption[] linkOptions = new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
 

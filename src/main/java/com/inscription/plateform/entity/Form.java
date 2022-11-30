@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-
+import java.util.List;
 
 
 @Entity
@@ -41,6 +41,16 @@ public class Form {
     @OneToOne(mappedBy = "form")
     private User user;
 
+
+
+   /* @OneToMany(
+            mappedBy = "form",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<FormFile> files = new ArrayList<>();
+
+*/
 
 
 
