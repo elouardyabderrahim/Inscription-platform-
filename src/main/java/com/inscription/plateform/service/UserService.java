@@ -63,8 +63,10 @@ public class UserService{
     }
     public User findByUserName(String userName) {
 
+
         return userRepository.findByUserName(userName);}
     // ------------------------------------------------------------------
+
     public User registerDefaultUser(User user) {
         //  String password = user.getPassword();
         // user.setPassword(passwordEncoder.encode(password));
