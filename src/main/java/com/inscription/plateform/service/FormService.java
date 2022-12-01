@@ -31,10 +31,8 @@ public class FormService {
 
     public Form createForm(Form form) {
 
-        FormFile formFile = new FormFile();
-        form.setFile(formFile.getName());
-
-
+        //FormFile formFile = new FormFile();
+        //form.setFile(formFile.getName());
 
         return formRepository.save(form);
     }
